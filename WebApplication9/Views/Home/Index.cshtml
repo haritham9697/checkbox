@@ -1,0 +1,180 @@
+﻿<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+        is an ideal platform for building RESTful applications on the .NET Framework.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+
+<h1>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</h1>
+
+
+@{
+
+            ViewBag.Title = "Index";
+
+}
+
+@using (Html.BeginForm("Index", "Home"))
+
+{
+    <h2>mypage</h2>
+
+
+    <body>
+        <form action="" method="GET">
+            <p>
+                USER
+            </p>
+            <p>
+                <input id="user" name="chb[]" value="vijay" type="checkbox" />vijay
+            </p>
+            <p>
+                <input id="user" name="chb[]" value="preetham" type="checkbox" />preetham
+            </p>
+            <p>
+                <input id="user" name="chb[]" value="hari" type="checkbox" />hari
+            </p>
+            <p>
+                CATEGORY
+            </p>
+            <p>
+                <input id="category" name="cat[]" value="noncore" type="checkbox" />noncore
+            </p>
+            <p>
+                <input id="category" name="cat[]" value="core" type="checkbox" />core
+            </p>
+            <p>
+                <input id="category" name="cat[]" value="supercore" type="checkbox" />supercore
+            </p>
+            <p>
+                SPECIALITY
+            </p>
+            <p>
+                <input id="speciality" name="spe[]" value="derma" type="checkbox" />derma
+            </p>
+            <p>
+                <input id="speciality" name="spe[]" value="cardio" type="checkbox" />cardio
+            </p>
+            <p>
+                <input id="speciality" name="spe[]" value="ent" type="checkbox" />ent
+            </p>
+            <p>
+                &nbsp;
+            </p>
+            <p>
+                <input id="Button1" type="button" value="submit" onclick="GetcallDetails()" />
+
+            </p>
+        </form>
+    </body>
+
+}
+<script>
+    function GetcallDetails() {
+
+        debugger;
+        var user = [];
+        $.each($("input[name='chb[]']:checked"), function () {
+            user.push($(this).val());
+        });
+        var joinuser ="'"+user.join("','")+"'" ;
+
+        var category = [];
+        $.each($("input[name='cat[]']:checked"), function () {
+            category.push($(this).val());
+        });
+        var joincategory ="'"+category.join("','")+"'";
+
+
+        var speciality = [];
+        $.each($("input[name='spe[]']:checked"), function () {
+            speciality.push($(this).val());
+        });
+        var joinspeciality = "'"+speciality.join("','")+"'";
+
+
+
+
+
+        console.log(joinuser)
+         console.log(joincategory)
+         console.log(joinspeciality)
+
+         var SelectedList = "";
+         if (user.length > 0) {
+             SelectedList += "k1=user &&  v1 =" + joinuser;
+         }
+         if (category.length > 0) {
+             SelectedList += "k2 = category && v2 =" + joincategory;
+         }
+         if (speciality .length > 0) {
+
+             SelectedList += "k3 = speciality && v3 = " + joinspeciality;
+         }
+         if ($.trim(SelectedList) != "") alert(SelectedList);
+         else {
+             alert("select something");
+         }
+
+
+
+
+               
+     @*  $.ajax('/Home/Getuser', {
+            type: 'GET',  // http method
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: { '&user': +joinuser + '&category=' + joincategory + '&speciality=' + joinspeciality },  // data to get
+            success: function (data, status, xhr) {
+                console.log(data)
+
+                $('p').append('status: ' + status + ', data: ' + data);
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                $('p').append('Error' + errorMessage);
+            }
+        });*@
+
+       @* $.ajax({
+            type: "GET",
+            url: 'http://localhost:65368/api/calls/',
+            data: 'k1=' + joinuser + '&k2=' + joincategory + '&k3=' + joinspeciality,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+
+        });*@
+
+       // window.location.href = 'http://localhost:65368/api/calls/'+'user'+'/'+'category'+'/'+'speciality'+'/'+joinuser+'/'+joincategory+'/'+joinspeciality;
+        
+        window.location.href = 'http://localhost:65368/api/calls/' + 'k1=user' + '&' + 'v1=' + joinuser + '&' + 'k2=category' + '&' + 'v2=' + joincategory + '&' + 'k3=speciality' + '&' + 'v3=' + joinspeciality;
+        
+        
+    }
+</script>
